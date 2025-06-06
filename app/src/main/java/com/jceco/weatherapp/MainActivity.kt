@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.jceco.weatherapp.pages.WeatherHomeScreen
 import com.jceco.weatherapp.ui.theme.WeatherAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,10 +19,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WeatherAppTheme {
-
-            }
+            WeatherApp()
         }
+    }
+}
+
+@Composable
+fun WeatherApp(modifier: Modifier = Modifier) {
+    WeatherAppTheme {
+        WeatherHomeScreen()
     }
 }
 
