@@ -1,6 +1,6 @@
 package com.jceco.weatherapp.data
 
-import com.jceco.weatherapp.network.WeatherApi
+import com.jceco.weatherapp.services.WeatherApi
 import com.jceco.weatherapp.repository.WeatherRepository
 
 class WeatherRepositoryImpl : WeatherRepository {

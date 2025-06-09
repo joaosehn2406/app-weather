@@ -1,4 +1,4 @@
-package com.jceco.weatherapp.network
+package com.jceco.weatherapp.services
 
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.data.ForecastWeather
@@ -16,10 +16,10 @@ private val retrofit = Retrofit.Builder()
 
 interface WeatherApiService {
 
-    @GET("weather?lat=26.927297526419704&lon=-49.25099473192019&appid=c3ca9fa126f4a03f93b7b2001c14a0c8")
+    @GET()
     suspend fun getCurrentWeather(@Url endUrl: String) : CurrentWeather
 
-    @GET("forecast?lat=26.927297526419704&lon=-49.25099473192019&appid=c3ca9fa126f4a03f93b7b2001c14a0c8")
+    @GET()
     suspend fun getForecastWeather(@Url endUrl: String) : ForecastWeather
 }
 
