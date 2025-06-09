@@ -10,7 +10,7 @@ class WeatherRepositoryImpl : WeatherRepository {
     }
 
     override suspend fun getForecastWeather(endUrl: String): ForecastWeather {
-        TODO("Not yet implemented")
+        return WeatherApi.retrofitService.getForecastWeather(endUrl)
     }
 
 }
