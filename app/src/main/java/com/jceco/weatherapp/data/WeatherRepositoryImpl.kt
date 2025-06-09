@@ -1,0 +1,16 @@
+package com.jceco.weatherapp.data
+
+import com.jceco.weatherapp.network.WeatherApi
+import com.jceco.weatherapp.repository.WeatherRepository
+
+class WeatherRepositoryImpl : WeatherRepository {
+
+    override suspend fun getCurrentWeather(endUrl: String): CurrentWeather {
+        return WeatherApi.retrofitService.getCurrentWeather(endUrl)
+    }
+
+    override suspend fun getForecastWeather(endUrl: String): ForecastWeather {
+        TODO("Not yet implemented")
+    }
+
+}
