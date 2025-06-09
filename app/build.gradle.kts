@@ -6,26 +6,17 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val localProperties = Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
-}
-
-val weatherApiKey = localProperties.getProperty("WEATHER_API_KEY") ?: ""
-
 android {
-    namespace = "com.jceco.weatherapp"
-    compileSdk = 35
+    namespace   = "com.jceco.weatherapp"
+    compileSdk  = 35
 
     defaultConfig {
-        applicationId = "com.jceco.weatherapp"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
+        applicationId    = "com.jceco.weatherapp"
+        minSdk           = 26
+        targetSdk        = 35
+        versionCode      = 1
+        versionName      = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
     }
 
     buildTypes {
@@ -37,6 +28,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -44,6 +36,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
