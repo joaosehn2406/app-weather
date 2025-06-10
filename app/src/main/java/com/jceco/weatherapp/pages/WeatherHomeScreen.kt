@@ -1,6 +1,7 @@
 package com.jceco.weatherapp.pages
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -12,10 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
+import com.jceco.weatherapp.data.CurrentWeather
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +34,12 @@ fun WeatherHomeScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "Weather App", style = MaterialTheme.typography.titleLarge) },
+                    title = {
+                        Text(
+                            text = "Weather App",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         actionIconContentColor = Color.White,
@@ -54,5 +63,36 @@ fun WeatherHomeScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun WeatherSection(
+    weather: Weather,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(8.dp)
+    ) {
+        CurrentWeatherSection(
+            currentWeather = weather.currentWeather,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+fun CurrentWeatherSection(
+    currentWeather: CurrentWeather,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "${currentWeather.name}, ${currentWeather.sys.country}",
+            style = MaterialTheme.typography.titleMedium
+            )
     }
 }
