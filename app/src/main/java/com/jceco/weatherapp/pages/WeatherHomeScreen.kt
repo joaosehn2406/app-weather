@@ -149,6 +149,7 @@ fun CurrentWeatherSection(
             )
         }
     }
+
     Log.d("WeatherApp", "Icon URL: ${getIconURL(currentWeather.weather.firstOrNull()?.icon ?: "vazi")}")
 
 }
