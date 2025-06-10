@@ -19,7 +19,10 @@ import com.jceco.weatherapp.customui.AppBackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherHomeScreen(modifier: Modifier = Modifier) {
+fun WeatherHomeScreen(
+    uiState: WeatherHomeUiState,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxSize()
     ) {
