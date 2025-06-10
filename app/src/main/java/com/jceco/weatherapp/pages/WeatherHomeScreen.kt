@@ -2,7 +2,9 @@ package com.jceco.weatherapp.pages
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
 import com.jceco.weatherapp.data.CurrentWeather
+import com.jceco.weatherapp.utils.DEGREE
 import com.jceco.weatherapp.utils.getFormattedDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,9 +96,17 @@ fun CurrentWeatherSection(
     ) {
         Text(
             text = "${currentWeather.name} | ${currentWeather.sys.country}",
-            style = MaterialTheme.typography.titleMedium)
+            style = MaterialTheme.typography.titleLarge)
         Text(
             getFormattedDate(currentWeather.dt, pattern = "dd/MM/yyyy"),
+            style = MaterialTheme.typography.titleLarge)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            "${currentWeather.main.temp.toInt()}$DEGREE",
+            style = MaterialTheme.typography.displayLarge)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            "${currentWeather.main.feelsLike.toInt()}$DEGREE",
             style = MaterialTheme.typography.titleMedium)
     }
 }
