@@ -1,6 +1,5 @@
-package com.jceco.weatherapp.pages
+package com.jceco.weatherapp.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.data.ForecastWeather
 import com.jceco.weatherapp.data.WeatherRepositoryImpl
+import com.jceco.weatherapp.pages.Weather
+import com.jceco.weatherapp.pages.WeatherHomeUiState
 import com.jceco.weatherapp.repository.WeatherRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -17,7 +19,11 @@ class WeatherHomeViewModel : ViewModel() {
     private val weatherRepository: WeatherRepository = WeatherRepositoryImpl()
     var uiState: WeatherHomeUiState by mutableStateOf(WeatherHomeUiState.Loading)
 
-    fun getWeatherData(){
+    private val exceptionHandler = CoroutineExceptionHandler { _ , _ ->
+        uiState = WeatherHomeUiState.Error
+    }
+
+    fun getWeatherData(exceptionHandler: CoroutineExceptionHandler){
         viewModelScope.launch {
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
