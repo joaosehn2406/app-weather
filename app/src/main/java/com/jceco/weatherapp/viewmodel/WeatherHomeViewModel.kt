@@ -19,12 +19,12 @@ class WeatherHomeViewModel : ViewModel() {
     private val weatherRepository: WeatherRepository = WeatherRepositoryImpl()
     var uiState: WeatherHomeUiState by mutableStateOf(WeatherHomeUiState.Loading)
 
-    private val exceptionHandler = CoroutineExceptionHandler { _ , _ ->
+    val exceptionHandler = CoroutineExceptionHandler { _ , _ ->
         uiState = WeatherHomeUiState.Error
     }
 
-    fun getWeatherData(exceptionHandler: CoroutineExceptionHandler){
-        viewModelScope.launch {
+    fun getWeatherData(){
+        viewModelScope.launch(exceptionHandler) {
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
                 val forecastWeather = async { getForecastData() }.await()
