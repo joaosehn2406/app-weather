@@ -47,7 +47,11 @@ fun WeatherHomeScreen(
                     .fillMaxSize()
                     .wrapContentSize()
             ) {
-                Text(text = "Weather Home Screen", style = MaterialTheme.typography.displaySmall)
+                when (uiState) {
+                    is WeatherHomeUiState.Loading -> Text(text = "Loading...")
+                    is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
+                    is WeatherHomeUiState.Success -> Text(uiState.weather.currentWeather.main!!.toString())
+                }
             }
         }
     }
