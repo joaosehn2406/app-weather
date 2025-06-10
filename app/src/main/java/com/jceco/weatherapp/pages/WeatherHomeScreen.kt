@@ -1,12 +1,18 @@
 package com.jceco.weatherapp.pages
 
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,12 +24,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.utils.DEGREE
 import com.jceco.weatherapp.utils.getFormattedDate
+import com.jceco.weatherapp.utils.getIconURL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,17 +107,51 @@ fun CurrentWeatherSection(
     ) {
         Text(
             text = "${currentWeather.name} | ${currentWeather.sys.country}",
-            style = MaterialTheme.typography.titleLarge)
+            style = MaterialTheme.typography.titleMedium)
         Text(
             getFormattedDate(currentWeather.dt, pattern = "dd/MM/yyyy"),
-            style = MaterialTheme.typography.titleLarge)
-        Spacer(modifier = Modifier.height(16.dp))
+            style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.height(24.dp))
         Text(
             "${currentWeather.main.temp.toInt()}$DEGREE",
             style = MaterialTheme.typography.displayLarge)
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Text(
             "${currentWeather.main.feelsLike.toInt()}$DEGREE",
             style = MaterialTheme.typography.titleMedium)
+        Row(
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .wrapContentSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val icon = currentWeather.weather.firstOrNull()?.icon ?: ""
+            val iconUrl = getIconURL(icon)
+
+            Log.d("WeatherApp", "Icon URL: $iconUrl")
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(iconUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Ícone do clima",
+                modifier = Modifier.size(48.dp),
+                onError = {
+                    Log.e("WeatherApp", "Erro ao carregar imagem: ${it.result.throwable}")
+                }
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Text(
+                text = currentWeather.weather.firstOrNull()?.description
+                    ?.replaceFirstChar { it.uppercaseChar() } ?: "Sem descrição",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
     }
+    Log.d("WeatherApp", "Icon URL: ${getIconURL(currentWeather.weather.firstOrNull()?.icon ?: "vazio")}")
+
 }

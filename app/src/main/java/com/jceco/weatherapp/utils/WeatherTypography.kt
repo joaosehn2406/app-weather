@@ -72,13 +72,13 @@ val weatherTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = figTreeFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 100.sp,
+        fontSize = 70.sp,
         color = Color.White
     ),
     displayMedium = TextStyle(
         fontFamily = figTreeFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 36.sp,
+        fontSize = 56.sp,
         color = Color.White
     ),
     displaySmall = TextStyle(
