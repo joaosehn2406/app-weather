@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -107,18 +108,22 @@ fun CurrentWeatherSection(
     ) {
         Text(
             text = "${currentWeather.name} | ${currentWeather.sys.country}",
-            style = MaterialTheme.typography.titleMedium)
+            style = MaterialTheme.typography.titleMedium
+        )
         Text(
             getFormattedDate(currentWeather.dt, pattern = "dd/MM/yyyy"),
-            style = MaterialTheme.typography.titleMedium)
+            style = MaterialTheme.typography.titleMedium
+        )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             "${currentWeather.main.temp.toInt()}$DEGREE",
-            style = MaterialTheme.typography.displayLarge)
+            style = MaterialTheme.typography.displayLarge
+        )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             "${currentWeather.main.feelsLike.toInt()}$DEGREE",
-            style = MaterialTheme.typography.titleMedium)
+            style = MaterialTheme.typography.titleMedium
+        )
         Row(
             modifier = Modifier
                 .padding(top = 24.dp)
@@ -133,7 +138,7 @@ fun CurrentWeatherSection(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(iconUrl)
+                    .data("https://openweathermap.org/img/wn/10d@2x.png")
                     .crossfade(true)
                     .build(),
                 contentDescription = "Ícone do clima",
@@ -148,8 +153,42 @@ fun CurrentWeatherSection(
                 style = MaterialTheme.typography.titleLarge
             )
         }
-    }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column{
+                Text(
+                    text = "Humidity ${currentWeather.main.humidity}%",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Pressure ${currentWeather.main.pressure}Pa",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Visibility ${currentWeather.main.humidity}%",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Surface(modifier = Modifier.width(2.dp).height(100.dp)) {}
+            Spacer(modifier = Modifier.width(10.dp))
+            Column{
+                Text(
+                    text = "Sunrise ${getFormattedDate(currentWeather.sys.sunrise, "HH:mm")}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Sunset ${getFormattedDate(currentWeather.sys.sunset, "HH:mm")}",
+                    style = MaterialTheme.typography.titleMedium
+                )
 
-    Log.d("WeatherApp", "Icon URL: ${getIconURL(currentWeather.weather.firstOrNull()?.icon ?: "vazi")}")
+            }
+
+        }
+    }
 
 }
