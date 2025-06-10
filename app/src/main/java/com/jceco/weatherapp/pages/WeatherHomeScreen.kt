@@ -138,9 +138,6 @@ fun CurrentWeatherSection(
                     .build(),
                 contentDescription = "Ícone do clima",
                 modifier = Modifier.size(48.dp),
-                onError = {
-                    Log.e("WeatherApp", "Erro ao carregar imagem: ${it.result.throwable}")
-                }
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -152,6 +149,6 @@ fun CurrentWeatherSection(
             )
         }
     }
-    Log.d("WeatherApp", "Icon URL: ${getIconURL(currentWeather.weather.firstOrNull()?.icon ?: "vazio")}")
+    Log.d("WeatherApp", "Icon URL: ${getIconURL(currentWeather.weather.firstOrNull()?.icon ?: "vazi")}")
 
 }
