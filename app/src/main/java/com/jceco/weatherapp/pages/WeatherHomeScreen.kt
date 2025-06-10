@@ -50,7 +50,7 @@ fun WeatherHomeScreen(
                 when (uiState) {
                     is WeatherHomeUiState.Loading -> Text(text = "Loading...")
                     is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
-                    is WeatherHomeUiState.Success -> Text(uiState.weather.currentWeather.main!!.toString())
+                    is WeatherHomeUiState.Success -> Text(uiState.weather.currentWeather.main!!.())
                 }
             }
         }
