@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
 import com.jceco.weatherapp.data.CurrentWeather
+import com.jceco.weatherapp.utils.getFormattedDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,9 +58,9 @@ fun WeatherHomeScreen(
                     .wrapContentSize()
             ) {
                 when (uiState) {
-                    is WeatherHomeUiState.Loading -> Text(text = "Loading...")
-                    is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
-                    is WeatherHomeUiState.Success -> Text(uiState.weather.currentWeather.main!!.toString())
+                    is WeatherHomeUiState.Loading -> Text(text = "Carregando...")
+                    is WeatherHomeUiState.Error -> Text(text = "Erro ao buscar dados")
+                    is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
                 }
             }
         }
@@ -91,8 +92,10 @@ fun CurrentWeatherSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "${currentWeather.name}, ${currentWeather.sys.country}",
-            style = MaterialTheme.typography.titleMedium
-            )
+            text = "${currentWeather.name} | ${currentWeather.sys.country}",
+            style = MaterialTheme.typography.titleMedium)
+        Text(
+            getFormattedDate(currentWeather.dt, pattern = "dd/MM/yyyy"),
+            style = MaterialTheme.typography.titleMedium)
     }
 }
