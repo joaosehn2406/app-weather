@@ -33,9 +33,11 @@ import coil3.request.crossfade
 import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
 import com.jceco.weatherapp.data.CurrentWeather
+import com.jceco.weatherapp.data.ForecastWeather
 import com.jceco.weatherapp.utils.DEGREE
 import com.jceco.weatherapp.utils.getFormattedDate
-import com.jceco.weatherapp.utils.getIconURL
+import com.jceco.weatherapp.utils.getIconUrl
+import kotlin.collections.get
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -131,14 +133,9 @@ fun CurrentWeatherSection(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val icon = currentWeather.weather.firstOrNull()?.icon ?: ""
-            val iconUrl = getIconURL(icon)
-
-            Log.d("WeatherApp", "Icon URL: $iconUrl")
-
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://openweathermap.org/img/wn/10d@2x.png")
+                    .data(getIconUrl(currentWeather.weather[0].icon))
                     .crossfade(true)
                     .build(),
                 contentDescription = "Ícone do clima",
@@ -174,7 +171,9 @@ fun CurrentWeatherSection(
                 )
             }
             Spacer(modifier = Modifier.width(10.dp))
-            Surface(modifier = Modifier.width(2.dp).height(100.dp)) {}
+            Surface(modifier = Modifier
+                .width(2.dp)
+                .height(100.dp)) {}
             Spacer(modifier = Modifier.width(10.dp))
             Column{
                 Text(
@@ -191,4 +190,9 @@ fun CurrentWeatherSection(
         }
     }
 
+}
+
+@Composable
+fun ForecastWeatherSection(modifier: Modifier = Modifier) {
+    
 }
