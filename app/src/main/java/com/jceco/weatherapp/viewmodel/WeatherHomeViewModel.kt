@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
 
 class WeatherHomeViewModel : ViewModel() {
     private val weatherRepository: WeatherRepository = WeatherRepositoryImpl()
+    private var latitude = 0.0
+    private var longitude = 0.0
     var uiState: WeatherHomeUiState by mutableStateOf(WeatherHomeUiState.Loading)
 
     val exceptionHandler = CoroutineExceptionHandler { _ , _ ->
@@ -39,12 +41,12 @@ class WeatherHomeViewModel : ViewModel() {
     }
 
     private suspend fun getCurrentData() : CurrentWeather {
-        val endUrl: String = "weather?lat=-26.8975&lon=-49.2317&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
+        val endUrl: String = "weather?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
         return weatherRepository.getCurrentWeather(endUrl)
     }
 
     private suspend fun getForecastData() : ForecastWeather {
-        val endUrl: String = "forecast?lat=-26.8975&lon=-49.2317&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
+        val endUrl: String = "forecast?lat=-$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
         return weatherRepository.getForecastWeather(endUrl)
     }
 }
