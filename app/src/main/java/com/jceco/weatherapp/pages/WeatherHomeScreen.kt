@@ -123,7 +123,7 @@ fun CurrentWeatherSection(
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            "${currentWeather.main.temp.toInt()}$DEGREE",
+            "${"%.1f".format((currentWeather.main.temp.toDouble() - 100) / 10)}$DEGREE",
             style = MaterialTheme.typography.displayLarge
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -242,11 +242,15 @@ fun ForecastWeatherItem(
                     .crossfade(true)
                     .build(),
                 contentDescription = "Ícone do clima",
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier
+                    .size(48.dp)
                     .padding(top = 4.dp, bottom = 4.dp)
             )
             Spacer(modifier = modifier.height(10.dp))
-            Text("${item.main.temp.toInt()}$DEGREE ", style = MaterialTheme.typography.titleMedium)
+            Text(
+                "${"%.1f".format((item.main.temp.toDouble() - 100) / 10)}$DEGREE",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
