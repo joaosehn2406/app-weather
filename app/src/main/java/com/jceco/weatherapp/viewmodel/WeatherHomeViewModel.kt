@@ -25,6 +25,11 @@ class WeatherHomeViewModel : ViewModel() {
         uiState = WeatherHomeUiState.Error
     }
 
+    fun setLocation(lat: Double, lon: Double) {
+        latitude = lat
+        longitude = lon
+    }
+
     fun getWeatherData(){
         viewModelScope.launch(exceptionHandler) {
             uiState = try {

@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace   = "com.jceco.weatherapp"
-    compileSdk  = 35
+    namespace = "com.jceco.weatherapp"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId    = "com.jceco.weatherapp"
-        minSdk           = 26
-        targetSdk        = 35
-        versionCode      = 1
-        versionName      = "1.0"
+        applicationId = "com.jceco.weatherapp"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,22 +44,36 @@ android {
 }
 
 dependencies {
-    implementation(libs.coil.ok.http)
-    implementation(libs.coil.compose)
-    implementation(libs.androidx.core.ktx)
+    // Core AndroidX
+    implementation("androidx.core:core-ktx:1.16.0") // ✅ versão mais recente estável
+
+    // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material3)
+
+    // Compose Activity
+    implementation(libs.androidx.activity.compose)
+
+    // Coil (imagem)
+    implementation(libs.coil.ok.http)
+    implementation(libs.coil.compose)
+
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.coil.compose)
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Google Play Services - Location
     implementation(libs.play.services.location)
+
+    // Testes
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
