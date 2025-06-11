@@ -13,3 +13,8 @@ sealed interface WeatherHomeUiState {
     data object Error : WeatherHomeUiState
     data object Loading : WeatherHomeUiState
 }
+
+sealed interface ConnectivityState {
+    data object Available : ConnectivityState
+    data object Unavailable : ConnectivityState
+}

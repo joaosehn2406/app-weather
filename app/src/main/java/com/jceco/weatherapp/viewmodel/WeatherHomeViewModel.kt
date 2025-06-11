@@ -36,8 +36,8 @@ class WeatherHomeViewModel : ViewModel() {
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
                 val forecastWeather = async { getForecastData() }.await()
-//                Log.d("WeatherHomeViewMOdel", "currentData: ${currentWeather.main!!.temp}")
-//                Log.d("WeatherHomeViewMOdel", "currentData: ${forecastWeather.list.size}")
+                Log.d("WeatherHomeViewMOdel", "currentData: ${currentWeather.main!!.temp}")
+                Log.d("WeatherHomeViewMOdel", "currentData: ${forecastWeather.list.size}")
                 WeatherHomeUiState.Success(Weather(currentWeather, forecastWeather))
             }
             catch(e: Exception) {
