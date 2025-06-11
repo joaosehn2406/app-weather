@@ -13,9 +13,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -42,6 +46,7 @@ import com.jceco.weatherapp.utils.getIconUrl
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherHomeScreen(
+    isConnected: Boolean,
     uiState: WeatherHomeUiState,
     modifier: Modifier = Modifier
 ) {
@@ -74,12 +79,33 @@ fun WeatherHomeScreen(
                     .fillMaxSize()
                     .wrapContentSize()
             ) {
-                when (uiState) {
-                    is WeatherHomeUiState.Loading -> Text(text = "Loading...")
-                    is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
-                    is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
+                if (!isConnected) {
+                    Text("No internet connection", style = MaterialTheme.typography.titleMedium)
+                } else {
+                    when (uiState) {
+                        is WeatherHomeUiState.Loading -> Text(text = "Loading...")
+                        is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
+                        is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
+                    }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ErrorSection(
+    msg: String,
+    onRefresh: () -> Unit
+) {
+    Column {
+        Text(msg)
+        Spacer(modifier = Modifier.height(12.dp))
+        IconButton(
+            onClick = onRefresh,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Icon(Icons.Default.Refresh, contentDescription = null, tint = Color.White)
         }
     }
 }
