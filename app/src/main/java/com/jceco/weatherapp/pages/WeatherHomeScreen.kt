@@ -1,6 +1,5 @@
 package com.jceco.weatherapp.pages
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,11 +35,9 @@ import com.jceco.weatherapp.R
 import com.jceco.weatherapp.customui.AppBackground
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.data.ForecastWeather
-import com.jceco.weatherapp.data.ForecastWeather.ForecastItem
 import com.jceco.weatherapp.utils.DEGREE
 import com.jceco.weatherapp.utils.getFormattedDate
 import com.jceco.weatherapp.utils.getIconUrl
-import kotlin.collections.get
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,8 +75,8 @@ fun WeatherHomeScreen(
                     .wrapContentSize()
             ) {
                 when (uiState) {
-                    is WeatherHomeUiState.Loading -> Text(text = "Carregando...")
-                    is WeatherHomeUiState.Error -> Text(text = "Erro ao buscar dados")
+                    is WeatherHomeUiState.Loading -> Text(text = "Loading...")
+                    is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
                     is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
                 }
             }
@@ -201,8 +197,7 @@ fun CurrentWeatherSection(
 
 @Composable
 fun ForecastWeatherSection(
-    forecastItems: List<ForecastWeather.ForecastItem>,
-    modifier: Modifier = Modifier
+    forecastItems: List<ForecastWeather.ForecastItem>
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(6.dp)
