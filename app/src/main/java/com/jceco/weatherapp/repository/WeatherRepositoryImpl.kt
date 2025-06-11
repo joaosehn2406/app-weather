@@ -2,7 +2,6 @@ package com.jceco.weatherapp.repository
 
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.data.ForecastWeather
-import com.jceco.weatherapp.services.WeatherApi
 import com.jceco.weatherapp.services.WeatherApiService
 import javax.inject.Inject
 

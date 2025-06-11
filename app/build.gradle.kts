@@ -1,8 +1,11 @@
+// ---------- app/build.gradle.kts ----------
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
+    alias(libs.plugins.dagger.hilt.android)   // Hilt
+    id("org.jetbrains.kotlin.kapt")           // KAPT
 }
 
 android {
@@ -43,9 +46,9 @@ android {
 }
 
 dependencies {
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    kapt         (libs.hilt.compiler)
 
     // Core AndroidX
     implementation("androidx.core:core-ktx:1.16.0")
@@ -75,8 +78,6 @@ dependencies {
 
     // Google Play Services - Location
     implementation(libs.play.services.location)
-    implementation(libs.hilt.android)
-    "kapt"(libs.hilt.compiler)
 
     // Testes
     testImplementation(libs.junit)

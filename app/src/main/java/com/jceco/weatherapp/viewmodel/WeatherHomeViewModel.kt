@@ -13,12 +13,14 @@ import com.jceco.weatherapp.pages.Weather
 import com.jceco.weatherapp.pages.WeatherHomeUiState
 import com.jceco.weatherapp.repository.ConnectivityRepository
 import com.jceco.weatherapp.repository.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class WeatherHomeViewModel @Inject constructor(
     private val connectivityRepository: ConnectivityRepository,
     private val weatherRepository: WeatherRepository
@@ -42,7 +44,7 @@ class WeatherHomeViewModel @Inject constructor(
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
                 val forecastWeather = async { getForecastData() }.await()
-                Log.d("WeatherHomeViewMOdel", "currentData: ${currentWeather.main!!.temp}")
+                Log.d("WeatherHomeViewMOdel", "currentData: ${currentWeather.main.temp}")
                 Log.d("WeatherHomeViewMOdel", "currentData: ${forecastWeather.list.size}")
                 WeatherHomeUiState.Success(Weather(currentWeather, forecastWeather))
             }
@@ -54,12 +56,12 @@ class WeatherHomeViewModel @Inject constructor(
     }
 
     private suspend fun getCurrentData() : CurrentWeather {
-        val endUrl: String = "weather?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
+        val endUrl = "weather?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
         return weatherRepository.getCurrentWeather(endUrl)
     }
 
     private suspend fun getForecastData() : ForecastWeather {
-        val endUrl: String = "forecast?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
+        val endUrl = "forecast?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
         return weatherRepository.getForecastWeather(endUrl)
     }
 
