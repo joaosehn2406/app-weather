@@ -1,5 +1,6 @@
 package com.jceco.weatherapp.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -40,6 +41,7 @@ class WeatherHomeViewModel : ViewModel() {
                 WeatherHomeUiState.Success(Weather(currentWeather, forecastWeather))
             }
             catch(e: Exception) {
+                Log.e("WeatherViewModel", "Erro ao buscar dados: ${e.message}", e)
                 WeatherHomeUiState.Error
             }
         }
@@ -51,7 +53,7 @@ class WeatherHomeViewModel : ViewModel() {
     }
 
     private suspend fun getForecastData() : ForecastWeather {
-        val endUrl: String = "forecast?lat=-$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
+        val endUrl: String = "forecast?lat=$latitude&lon=$longitude&appid=c3ca9fa126f4a03f93b7b2001c14a0c8"
         return weatherRepository.getForecastWeather(endUrl)
     }
 }
