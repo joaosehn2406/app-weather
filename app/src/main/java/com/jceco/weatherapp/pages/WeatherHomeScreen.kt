@@ -47,6 +47,7 @@ import com.jceco.weatherapp.utils.getIconUrl
 @Composable
 fun WeatherHomeScreen(
     isConnected: Boolean,
+    onRefresh: () -> Unit,
     uiState: WeatherHomeUiState,
     modifier: Modifier = Modifier
 ) {
@@ -84,7 +85,8 @@ fun WeatherHomeScreen(
                 } else {
                     when (uiState) {
                         is WeatherHomeUiState.Loading -> Text(text = "Loading...")
-                        is WeatherHomeUiState.Error -> Text(text = "Failed to fetch data")
+                        is WeatherHomeUiState.Error -> ErrorSection("Failed to fetch data",
+                            onRefresh = onRefresh)
                         is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
                     }
                 }

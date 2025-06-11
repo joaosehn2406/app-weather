@@ -25,7 +25,7 @@ import com.jceco.weatherapp.viewmodel.WeatherHomeViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val client: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val client = LocationServices.getFusedLocationProviderClient(this)
         enableEdgeToEdge()
         setContent { WeatherApp(client) }
     }
@@ -39,7 +39,6 @@ fun WeatherApp(client: FusedLocationProviderClient) {
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         permissionGranted = it
     }
-
     LaunchedEffect(Unit) {
         val fineLoc = android.Manifest.permission.ACCESS_FINE_LOCATION
         if (ContextCompat.checkSelfPermission(context, fineLoc) != PackageManager.PERMISSION_GRANTED) {
@@ -48,7 +47,6 @@ fun WeatherApp(client: FusedLocationProviderClient) {
             permissionGranted = true
         }
     }
-
     LaunchedEffect(permissionGranted) {
         if (!permissionGranted) return@LaunchedEffect
         val cts = CancellationTokenSource()
@@ -65,14 +63,16 @@ fun WeatherApp(client: FusedLocationProviderClient) {
                 vm.uiState = WeatherHomeUiState.Error
             }
     }
-
     val connectivityState by vm.connectivityState.collectAsState(initial = ConnectivityState.Unavailable)
     val isConnected = connectivityState == ConnectivityState.Available
-
     WeatherAppTheme {
         WeatherHomeScreen(
-            uiState = vm.uiState,
-            isConnected = isConnected
+            isConnected = isConnected,
+            onRefresh = {
+                vm.uiState = WeatherHomeUiState.Loading
+                vm.getWeatherData()
+            },
+            uiState = vm.uiState
         )
     }
 }
