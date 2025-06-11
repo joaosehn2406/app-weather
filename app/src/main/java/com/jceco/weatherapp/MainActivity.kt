@@ -21,7 +21,9 @@ import com.jceco.weatherapp.pages.WeatherHomeScreen
 import com.jceco.weatherapp.pages.WeatherHomeUiState
 import com.jceco.weatherapp.ui.theme.WeatherAppTheme
 import com.jceco.weatherapp.viewmodel.WeatherHomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WeatherApp(client: FusedLocationProviderClient) {
-    val vm: WeatherHomeViewModel = viewModel(factory = WeatherHomeViewModel.Factory)
+    val vm: WeatherHomeViewModel = viewModel()
     val context = LocalContext.current
     var permissionGranted by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {

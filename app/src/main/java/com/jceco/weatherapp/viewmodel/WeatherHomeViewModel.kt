@@ -1,37 +1,28 @@
 package com.jceco.weatherapp.viewmodel
 
-import android.app.Application
-import android.net.ConnectivityManager
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import coil3.decode.StaticImageDecoder
 import com.jceco.weatherapp.data.CurrentWeather
 import com.jceco.weatherapp.data.ForecastWeather
-import com.jceco.weatherapp.data.WeatherRepositoryImpl
 import com.jceco.weatherapp.pages.ConnectivityState
 import com.jceco.weatherapp.pages.Weather
 import com.jceco.weatherapp.pages.WeatherHomeUiState
 import com.jceco.weatherapp.repository.ConnectivityRepository
-import com.jceco.weatherapp.repository.DefaultConnectivityRepository
 import com.jceco.weatherapp.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import okhttp3.internal.cache.CacheStrategy
+import javax.inject.Inject
 
-class WeatherHomeViewModel(
-    private val connectivityRepository: ConnectivityRepository
+class WeatherHomeViewModel @Inject constructor(
+    private val connectivityRepository: ConnectivityRepository,
+    private val weatherRepository: WeatherRepository
 ) : ViewModel() {
-    private val weatherRepository: WeatherRepository = WeatherRepositoryImpl()
     private var latitude = 0.0
     private var longitude = 0.0
     val connectivityState: StateFlow<ConnectivityState> = connectivityRepository.connectivityState
@@ -72,15 +63,15 @@ class WeatherHomeViewModel(
         return weatherRepository.getForecastWeather(endUrl)
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val application = (this[APPLICATION_KEY] as Application)
-                val connectivityManager = application.getSystemService(ConnectivityManager::class.java)
-                WeatherHomeViewModel(
-                    connectivityRepository = DefaultConnectivityRepository(connectivityManager)
-                )
-            }
-        }
-    }
+//    companion object {
+//        val Factory: ViewModelProvider.Factory = viewModelFactory {
+//            initializer {
+//                val application = (this[APPLICATION_KEY] as Application)
+//                val connectivityManager = application.getSystemService(ConnectivityManager::class.java)
+//                WeatherHomeViewModel(
+//                    connectivityRepository = DefaultConnectivityRepository(connectivityManager)
+//                )
+//            }
+//        }
+//    }
 }
