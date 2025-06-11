@@ -1,9 +1,8 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
 }
 
 android {
@@ -44,8 +43,12 @@ android {
 }
 
 dependencies {
+    //Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
     // Core AndroidX
-    implementation("androidx.core:core-ktx:1.16.0") // ✅ versão mais recente estável
+    implementation("androidx.core:core-ktx:1.16.0")
 
     // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -72,6 +75,8 @@ dependencies {
 
     // Google Play Services - Location
     implementation(libs.play.services.location)
+    implementation(libs.hilt.android)
+    "kapt"(libs.hilt.compiler)
 
     // Testes
     testImplementation(libs.junit)
