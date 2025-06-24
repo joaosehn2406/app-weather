@@ -81,7 +81,7 @@ Substitua `YOUR_API_KEY` pela sua chave da OpenWeatherMap. Registre-se em [OpenW
 
 1. **Clone o repositório**  
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   https://github.com/joaosehn2406/app-weather.git
    cd WeatherApp
    ```  
 2. **Abra no Android Studio** e sincronize o Gradle.  
